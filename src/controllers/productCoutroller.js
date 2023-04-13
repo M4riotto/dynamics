@@ -24,9 +24,9 @@ export const listId = (req, res) => {
 }
 
 export const createProducts = (req, res) => {
-  const course = req.body
+  const product = req.body
   //TODO Verificar se os dados são válidos
-  productModel.createCourse(course, (error, result) => {
+  productModel.createCourse(product, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
@@ -34,7 +34,7 @@ export const createProducts = (req, res) => {
         message: "Produto Cadastrado!",
         course:{
           id: result.insertId,
-          ...course
+          ...product
         } 
       })
     } 
@@ -74,9 +74,9 @@ export const deleteId = (req, res) => {
 }
 
 export const updateProduct = (req, res) => {
-  const course = req.body
+  const product = req.body
   //TODO Verificar se os dados são válidos
-  productModel.updateProduct(course, (error, result) => {
+  productModel.updateProduct(product, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {

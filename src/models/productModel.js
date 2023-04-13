@@ -13,7 +13,7 @@ export const listAllProduct = (callback) => {
 }
 
 export const listId = (id, callback) => {
-  const sql = "SELECT * FROM product WHERE id = ?;"
+  const sql = "SELECT * FROM products WHERE id = ?;"
   const values = [id]
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -28,11 +28,11 @@ export const listId = (id, callback) => {
 }
 
 export const createProduct = (product, callback) => {
-  const { nome, cargahoraria } = product
+  const { name, price, stock } = product
   // const sql = 'INSERT INTO cursos SET ?;'
   // const values = { nome, cargahoraria }
-  const sql = 'INSERT INTO product (nome, cargahoraria) VALUES (?, ?);'
-  const values = [nome, cargahoraria]
+  const sql = 'INSERT INTO products (name, price, stock) VALUES (?, ?, ?);'
+  const values = [name, price, stock]
 
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -58,10 +58,10 @@ export const deleteProduct = (id, callback) => {
   })
 }
 
-export const updateProduct = (course, callback) => {
-  const { id, nome, cargahoraria } = course
-  const sql = 'UPDATE cursos SET nome = ?, cargahoraria = ?  WHERE id = ?;'
-  const values = [nome, cargahoraria, id]
+export const updateProduct = (product, callback) => {
+  const { id, name, price, stock } = product
+  const sql = 'UPDATE products SET name = ?, price = ?, stock = ?  WHERE id = ?;'
+  const values = [name, price, stock, id]
 
   con.query(sql, values, (err, result) => {
     if (err) {
