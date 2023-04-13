@@ -1,5 +1,5 @@
 import express from 'express'
-import courseRoutes from './routes/courseRoutes.js'
+import productRoutes from './routes/productRoutes'
 import userRoutes from './routes/userRoutes.js'
 import { SERVER } from './config.js'
 import errorHandler from './middlewares/errorHandler.js'
@@ -12,7 +12,7 @@ app.use(logger)
 app.use(express.json())
 
 
-app.use('/course', courseRoutes)
+app.use('/product', courseRoutes)
 app.use('/user', userRoutes)
 
 app.all('*', (req, res) => {
