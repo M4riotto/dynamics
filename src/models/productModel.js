@@ -1,7 +1,7 @@
 import con from '../db/dbConnection.js'
 
 export const listAllProduct = (callback) => {
-  const sql = "SELECT * FROM product;"
+  const sql = "SELECT * FROM products;"
   con.query(sql, (err, result) => {
     if (err) {
       callback(err, null)
@@ -45,7 +45,7 @@ export const createProduct = (product, callback) => {
 }
 
 export const deleteProduct = (id, callback) => {
-  const sql = 'DELETE FROM product WHERE id = ?;'
+  const sql = 'DELETE FROM products WHERE id = ?;'
   const values = [id]
 
   con.query(sql, values, (err, result) => {

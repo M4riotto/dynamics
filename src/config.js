@@ -6,5 +6,5 @@ export const DB = {
   HOST: "localhost",
   USER: "root",
   PASS: "",
-  DB_NAME: "dynamics_db"
+  DB_NAME: "dynamics"
 }

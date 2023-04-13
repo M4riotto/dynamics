@@ -2,9 +2,9 @@ import productModel from '../models/productModel.js'
 
 export const listAllProducts = (req, res) => {
   productModel.listAllProduct((error, result) => {
-    if (error)
-      res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result.length){
+    if (error){
+      res.status(500).json({ message: "Erro no Banco de Dados" })}
+    else if (result.length){
       res.json(result)
     } else{
       res.json({ message: "Nenhum produto cadastrado!" })
@@ -26,7 +26,7 @@ export const listId = (req, res) => {
 export const createProducts = (req, res) => {
   const product = req.body
   //TODO Verificar se os dados são válidos
-  productModel.createCourse(product, (error, result) => {
+  productModel.createProduct(product, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
@@ -44,7 +44,7 @@ export const createProducts = (req, res) => {
 export const deleteProduct = (req, res) => {
   const { id } = req.body
   //TODO Verificar se os dados são válidos
-  productModel.deleteCourse(id, (error, result) => {
+  productModel.deleteProduct(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result){
@@ -60,7 +60,7 @@ export const deleteProduct = (req, res) => {
 export const deleteId = (req, res) => {
   const { id } = req.params
   //TODO Verificar se os dados são válidos
-  productModel.deleteCourse(id, (error, result) => {
+  productModel.deleteProduct(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
