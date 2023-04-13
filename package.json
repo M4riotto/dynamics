@@ -1,0 +1,25 @@
+{
+  "name": "backend-api-node",
+  "version": "1.0.0",
+  "description": "Backend do projeto 3 sem",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server",
+    "dev": "nodemon src/server"
+  },
+  "keywords": [
+    "api",
+    "node",
+    "express"
+  ],
+  "author": "Giovanna Siqueira",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
