@@ -1,13 +1,13 @@
-import courseModel from '../models/courseModel.js'
+import productModel from '../models/productModel.js'
 
-export const listAllCourses = (req, res) => {
-  courseModel.listAllCourses((error, result) => {
+export const listAllProducts = (req, res) => {
+  productModel.listAllProduct((error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result.length){
       res.json(result)
     } else{
-      res.json({ message: "Nenhum curso cadastrado!" })
+      res.json({ message: "Nenhum produto cadastrado!" })
     }
  
   })
@@ -15,7 +15,7 @@ export const listAllCourses = (req, res) => {
 
 export const listId = (req, res) => {
   const id = req.params.id
-  courseModel.listId(id, (error, result) => {
+  productModel.listId(id, (error, result) => {
     if (error) 
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result)
@@ -23,15 +23,15 @@ export const listId = (req, res) => {
   })
 }
 
-export const createCourse = (req, res) => {
+export const createProducts = (req, res) => {
   const course = req.body
   //TODO Verificar se os dados são válidos
-  courseModel.createCourse(course, (error, result) => {
+  productModel.createCourse(course, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
       res.json({ 
-        message: "Curso Cadastrado!",
+        message: "Produto Cadastrado!",
         course:{
           id: result.insertId,
           ...course
@@ -41,17 +41,17 @@ export const createCourse = (req, res) => {
   })
 }
 
-export const deleteCourse = (req, res) => {
+export const deleteProduct = (req, res) => {
   const { id } = req.body
   //TODO Verificar se os dados são válidos
-  courseModel.deleteCourse(id, (error, result) => {
+  productModel.deleteCourse(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result){
       if (result.affectedRows){
-        res.json({ message: "Curso Deletado com sucesso!" })
+        res.json({ message: "Produto Deletado com sucesso!" })
       } else{
-        res.status(404).json({ message: `Curso ${id} não encontrado!` })
+        res.status(404).json({ message: `Produto ${id} não encontrado!` })
       }
     }
   })
@@ -60,30 +60,30 @@ export const deleteCourse = (req, res) => {
 export const deleteId = (req, res) => {
   const { id } = req.params
   //TODO Verificar se os dados são válidos
-  courseModel.deleteCourse(id, (error, result) => {
+  productModel.deleteCourse(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
       if (result.affectedRows) {
-        res.json({ message: "Curso Deletado com sucesso!" })
+        res.json({ message: "Producto Deletado com sucesso!" })
       } else {
-        res.status(404).json({ message: `Curso ${id} não encontrado!` })
+        res.status(404).json({ message: `Produto ${id} não encontrado!` })
       }
     }
   })
 }
 
-export const updateCourse = (req, res) => {
+export const updateProduct = (req, res) => {
   const course = req.body
   //TODO Verificar se os dados são válidos
-  courseModel.updateCourse(course, (error, result) => {
+  productModel.updateProduct(course, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
       if (result.affectedRows) {
-        res.json({ message: "Curso Atualizado com sucesso!" })
+        res.json({ message: "Produto Atualizado com sucesso!" })
       } else {
-        res.status(404).json({ message: `Curso ${course.id} não encontrado!` })
+        res.status(404).json({ message: `Produto ${course.id} não encontrado!` })
       }
     }
   })

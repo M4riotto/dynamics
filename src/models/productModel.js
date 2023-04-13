@@ -1,7 +1,7 @@
 import con from '../db/dbConnection.js'
 
-export const listAllCourses = (callback) => {
-  const sql = "SELECT * FROM cursos;"
+export const listAllProduct = (callback) => {
+  const sql = "SELECT * FROM product;"
   con.query(sql, (err, result) => {
     if (err) {
       callback(err, null)
@@ -13,11 +13,11 @@ export const listAllCourses = (callback) => {
 }
 
 export const listId = (id, callback) => {
-  const sql = "SELECT * FROM cursos WHERE id = ?;"
+  const sql = "SELECT * FROM product WHERE id = ?;"
   const values = [id]
   con.query(sql, values, (err, result) => {
     if (err) {
-      callback(err, null) //a funcao callback é obg a passar 2 parametros
+      callback(err, null) 
       console.log(`DB Error: ${err.sqlMessage}`)
     }else if (result.length === 0){
       result.message = "Id não encontrado"
@@ -27,11 +27,11 @@ export const listId = (id, callback) => {
   })
 }
 
-export const createCourse = (course, callback) => {
-  const { nome, cargahoraria } = course
+export const createProduct = (product, callback) => {
+  const { nome, cargahoraria } = product
   // const sql = 'INSERT INTO cursos SET ?;'
   // const values = { nome, cargahoraria }
-  const sql = 'INSERT INTO cursos (nome, cargahoraria) VALUES (?, ?);'
+  const sql = 'INSERT INTO product (nome, cargahoraria) VALUES (?, ?);'
   const values = [nome, cargahoraria]
 
   con.query(sql, values, (err, result) => {
@@ -44,8 +44,8 @@ export const createCourse = (course, callback) => {
   })
 }
 
-export const deleteCourse = (id, callback) => {
-  const sql = 'DELETE FROM cursos WHERE id = ?;'
+export const deleteProduct = (id, callback) => {
+  const sql = 'DELETE FROM product WHERE id = ?;'
   const values = [id]
 
   con.query(sql, values, (err, result) => {
@@ -58,7 +58,7 @@ export const deleteCourse = (id, callback) => {
   })
 }
 
-export const updateCourse = (course, callback) => {
+export const updateProduct = (course, callback) => {
   const { id, nome, cargahoraria } = course
   const sql = 'UPDATE cursos SET nome = ?, cargahoraria = ?  WHERE id = ?;'
   const values = [nome, cargahoraria, id]
@@ -73,4 +73,4 @@ export const updateCourse = (course, callback) => {
   })
 }
 
-export default { listAllCourses, listId, createCourse, deleteCourse, updateCourse }
+export default { listAllProduct, listId, createProduct, deleteProduct, updateProduct }
