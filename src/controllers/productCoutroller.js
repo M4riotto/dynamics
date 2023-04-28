@@ -65,7 +65,7 @@ export const deleteId = (req, res) => {
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
       if (result.affectedRows) {
-        res.json({ message: "Producto Deletado com sucesso!" })
+        res.json({ message: "Produto Deletado com sucesso!" })
       } else {
         res.status(404).json({ message: `Produto ${id} não encontrado!` })
       }
