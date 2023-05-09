@@ -94,6 +94,7 @@ export const createUser = (user, callback) => {
       console.log(`DB Error: ${err.sqlMessage}`)
     } else {
       callback(null, result)
+      console.log('boa')
     }
   })
 }
