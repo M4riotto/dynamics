@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import { SERVER } from './config.js'
@@ -6,6 +7,7 @@ import { SERVER } from './config.js'
 const app = express()
 const port = SERVER.PORT
 
+app.use(cors())
 app.use(express.json())
 
 
