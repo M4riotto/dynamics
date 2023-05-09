@@ -55,7 +55,7 @@ export const validateUser = (user) => {
 }
 
 export const listAllUsers = (callback) => {
-  const sql = "SELECT * FROM cpf;"
+  const sql = "SELECT * users cpf;"
   con.query(sql, (err, result) => {
     if (err) {
       callback(err, null)
@@ -67,7 +67,7 @@ export const listAllUsers = (callback) => {
 }
 
 export const listId = (idUser, callback) => {
-  const sql = "SELECT * FROM cpf WHERE id = ?;"
+  const sql = "SELECT * FROM users WHERE id = ?;"
   const values = [idUser]
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -85,7 +85,7 @@ export const createUser = (user, callback) => {
   const { fname, lname, office, cpf, password, email } = user
   // const sql = 'INSERT INTO cursos SET ?;'
   // const values = { nome, cargahoraria }
-  const sql = 'INSERT INTO cpf (fname, lname, office, cpf, password, email) VALUES (?, ?, ?, ?, ?, ?);'
+  const sql = 'INSERT INTO users (fname, lname, office, cpf, password, email) VALUES (?, ?, ?, ?, ?, ?);'
   const values = [fname, lname, office, cpf, password, email]
 
   con.query(sql, values, (err, result) => {
@@ -101,7 +101,7 @@ export const createUser = (user, callback) => {
 
 export const deleteUser = (id, callback) => {
   // const id  = user
-  const sql = 'DELETE FROM cpf WHERE id = ?;'
+  const sql = 'DELETE FROM users WHERE id = ?;'
   const values = [id]
 
   con.query(sql, values, (err, result) => {
@@ -116,7 +116,7 @@ export const deleteUser = (id, callback) => {
 
 export const updateUser = (user, callback) => {
   const { id, fname, lname, office, cpf, password, email } = user
-  const sql = 'UPDATE cpf SET fname = ?, lname = ?, office = ?, password = ?, email = ?  WHERE id = ?;'
+  const sql = 'UPDATE users SET fname = ?, lname = ?, office = ?, password = ?, email = ?  WHERE id = ?;'
   const values = [fname, lname, office, cpf, password, email, id]
 
   con.query(sql, values, (err, result) => {
