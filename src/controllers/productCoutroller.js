@@ -9,7 +9,6 @@ export const listAllProducts = (req, res) => {
     } else{
       res.json({ message: "Nenhum produto cadastrado!" })
     }
- 
   })
 }
 
