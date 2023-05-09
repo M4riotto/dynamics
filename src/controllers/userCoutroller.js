@@ -1,4 +1,5 @@
 import userModel from '../models/userModel.js'
+import zodErrorFormat from '../helper/zodErrorFormat.js'
 
 export const listAllUsers = (req, res) => {
   userModel.listAllUsers((error, result) => {
@@ -26,8 +27,21 @@ export const listId = (req, res) => {
 }
 
 export const createUser = (req, res) => {
+
   const user = req.body
-  userModel.createUser(user, (error, result) => {
+  const validUser = userModel.validateUser(user)
+
+  if (validUser?.error) {
+    res.status(400).json({
+      message: 'Dados inválidos',
+      fields: zodErrorFormat(validUser.error)
+    })
+    return
+  }
+
+  const userValidated = validUser.data
+
+  userModel.createUser(userValidated, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result){
