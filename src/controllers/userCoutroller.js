@@ -36,7 +36,9 @@ export const createUser = (req, res) => {
       message: 'Dados inválidos',
       fields: zodErrorFormat(validUser.error)
     })
-    return
+    return (
+      console.log(zodErrorFormat(validUser.error))
+    )
   }
 
   const userValidated = validUser.data
