@@ -1,4 +1,58 @@
 import con from '../db/dbConnection.js'
+import { z } from 'zod'
+
+const userSchema = z.object({
+  id:
+    z.number({ message: "ID deve ser um valor numérico." })
+      .optional(),
+  lname:
+    z.string({
+      required_error: "lname é obrigatória.",
+      invalid_type_error: "lname deve ser uma string.",
+    })
+      .min(3, { message: "lname deve ter no mínimo 3 caracteres." })
+      .max(100, { message: "lname deve ter no máximo 100 caracteres." }),
+  fname:
+    z.string({
+      required_error: "fname é obrigatória.",
+      invalid_type_error: "fname deve ser uma string.",
+    })
+      .min(3, { message: "fname deve ter no mínimo 3 caracteres." })
+      .max(100, { message: "fname deve ter no máximo 100 caracteres." }),
+  office:
+    z.string({
+      required_error: "office é obrigatória.",
+      invalid_type_error: "office deve ser uma string.",
+    })
+      .min(3, { message: "office deve ter no mínimo 3 caracteres." })
+      .max(100, { message: "office deve ter no máximo 100 caracteres." }),
+  email:
+    z.string({
+      required_error: "Email é obrigatória.",
+      invalid_type_error: "Email deve ser uma string.",
+    })
+      .email({ message: "Email Inválido." })
+      .min(5, { message: "O email deve ter ao menos 5 caracteres." })
+      .max(200, { message: "Email deve ter no máximo 200 caracteres." }),
+  password:
+    z.string({
+      required_error: "password é obrigatória.",
+      invalid_type_error: "Senha deve ser uma string.",
+    })
+      .min(6, { message: "Senha deve ter no mínimo 6 caracteres." })
+      .max(256, { message: "Senha deve ter no máximo 256 caracteres." }),
+  cpf:
+    z.string({
+      required_error: "CPF é obrigatória.",
+      invalid_type_error: "AvaCPFtar deve ser uma string.",
+    })
+      .min(14, { message: "CPF deve ter no mínimo 14 caracteres." })
+      .max(14, { message: "CPF deve ter no máximo 14 caracteres." }),
+})
+
+export const validateUser = (user) => {
+  return userSchema.safeParse(user)
+}
 
 export const listAllUsers = (callback) => {
   const sql = "SELECT * FROM cpf;"
@@ -74,4 +128,4 @@ export const updateUser = (user, callback) => {
   })
 }
 
-export default { listAllUsers, listId, createUser, deleteUser, updateUser } 
+export default { listAllUsers, listId, createUser, deleteUser, updateUser, validateUser } 
