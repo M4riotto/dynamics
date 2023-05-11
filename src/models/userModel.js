@@ -55,7 +55,7 @@ export const validateUser = (user) => {
 }
 
 export const listAllUsers = (callback) => {
-  const sql = "SELECT * users cpf;"
+  const sql = "SELECT * FROM users;"
   con.query(sql, (err, result) => {
     if (err) {
       callback(err, null)
