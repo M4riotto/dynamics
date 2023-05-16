@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Maio-2023 às 22:36
--- Versão do servidor: 10.4.24-MariaDB
--- versão do PHP: 8.0.19
+-- Tempo de geração: 16-Maio-2023 às 22:34
+-- Versão do servidor: 10.4.22-MariaDB
+-- versão do PHP: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -49,7 +49,20 @@ INSERT INTO `products` (`id`, `name`, `price`, `stock`) VALUES
 (12, 'Marca Texto', 'R$ 2,00', 500),
 (13, 'Cx Lápis de Cor', 'R$ 48,00', 270),
 (14, 'Lápis de Escrever', 'R$ 1,00', 499),
-(15, 'Régua', 'R$ 20,00', 40);
+(15, 'Régua', 'R$ 20,00', 40),
+(16, 'Lapisera', 'R$ 5,00', 200);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `session` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -64,19 +77,22 @@ CREATE TABLE `users` (
   `office` varchar(50) NOT NULL,
   `cpf` int(11) NOT NULL,
   `password` varchar(257) NOT NULL,
-  `email` varchar(200) NOT NULL
+  `email` varchar(200) NOT NULL,
+  `token` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `users`
 --
 
-INSERT INTO `users` (`id`, `fname`, `lname`, `office`, `cpf`, `password`, `email`) VALUES
-(1, 'Giovanna', 'Siqueira', 'Dev Junior', 490441, '63e3ca6db02a52b901e682868ab41a1e3032f9f52dd2dad931c98847780f8de7', 'siqueira.nicolau@aluno.ifsp.edu.br'),
-(2, 'Vítor', 'Moreira', 'Dev Junior', 490471, '3cbe64eb45ee11ec63f0ab109169f6a934ef1168ca01899f0c1e5fbb32346574', 'vitor.moreira@aluno.ifsp.edu.br'),
-(3, 'Vítor', 'Barreto', 'Dev Junior', 450491, '63e3ca6db02a52b901e682868ab41a1e3032f9f52dd2dad931c98847780f8de7', 'vitor@gmail.com'),
-(4, 'Nata', 'Mendes', 'Dev Junior', 551875, '3cbe64eb45ee11ec63f0ab109169f6a934ef1168ca01899f0c1e5fbb32346574', 'nata_mendes@gmail.com'),
-(5, 'Renan', 'Cavichi', 'Dev Senior', 531855, '63e3ca6db02a52b901e682868ab41a1e3032f9f52dd2dad931c98847780f8de7', 'renancavichi@gmail.com');
+INSERT INTO `users` (`id`, `fname`, `lname`, `office`, `cpf`, `password`, `email`, `token`) VALUES
+(1, 'Giovanna', 'Siqueira', 'Dev Junior', 490441, '63e3ca6db02a52b901e682868ab41a1e3032f9f52dd2dad931c98847780f8de7', 'siqueira.nicolau@aluno.ifsp.edu.br', ''),
+(2, 'Vítor', 'Moreira', 'Dev Junior', 490471, '3cbe64eb45ee11ec63f0ab109169f6a934ef1168ca01899f0c1e5fbb32346574', 'vitor.moreira@aluno.ifsp.edu.br', ''),
+(3, 'Vítor', 'Barreto', 'Dev Junior', 450491, '63e3ca6db02a52b901e682868ab41a1e3032f9f52dd2dad931c98847780f8de7', 'vitor@gmail.com', ''),
+(4, 'Nata', 'Mendes', 'Dev Junior', 551875, '3cbe64eb45ee11ec63f0ab109169f6a934ef1168ca01899f0c1e5fbb32346574', 'nata_mendes@gmail.com', ''),
+(5, 'Renan', 'Cavichi', 'Dev Senior', 531855, '63e3ca6db02a52b901e682868ab41a1e3032f9f52dd2dad931c98847780f8de7', 'renancavichi@gmail.com', ''),
+(6, 'Moreira', 'Moreira', 'dev junnior', 490401, 'b8627206beb9e3b1bc6c65f3292d35fc8be5e1a2a764ad3ff2efe3c73b3ab77a', 'teste@gmail.com', ''),
+(7, 'jubieleu', 'Moreira', 'dev junnior', 490401, 'b8627206beb9e3b1bc6c65f3292d35fc8be5e1a2a764ad3ff2efe3c73b3ab77a', 'teste@gmail.com', '');
 
 --
 -- Índices para tabelas despejadas
@@ -87,6 +103,12 @@ INSERT INTO `users` (`id`, `fname`, `lname`, `office`, `cpf`, `password`, `email
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `sessions`
+--
+ALTER TABLE `sessions`
+  ADD KEY `fk_id_user` (`id`);
 
 --
 -- Índices para tabela `users`
@@ -102,13 +124,23 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `sessions`
+--
+ALTER TABLE `sessions`
+  ADD CONSTRAINT `fk_id_user` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
