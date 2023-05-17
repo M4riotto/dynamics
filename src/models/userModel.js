@@ -1,10 +1,13 @@
 import con from '../db/dbConnection.js'
 import { z } from 'zod'
+import sha256 from '../helper/sha256.js'
 
 const userSchema = z.object({
   id:
-    z.number({ message: "ID deve ser um valor numérico." })
-      .optional(),
+    z.number({ 
+      required_error: "ID é obrigatório.",
+      invalid_type_error: "Id deve ser um número."
+    }),
   lname:
     z.string({
       required_error: "lname é obrigatória.",
@@ -50,7 +53,12 @@ const userSchema = z.object({
       .max(14, { message: "CPF deve ter no máximo 14 caracteres." }),
 })
 
-export const validateUser = (user) => {
+export const validateUserToCreate = (user) => {
+  const partialUserSchema = userSchema.partial({ id: true });
+  return partialUserSchema.safeParse(user)
+}
+
+export const validateUserToUpdate = (user) => {
   return userSchema.safeParse(user)
 }
 
@@ -86,7 +94,7 @@ export const createUser = (user, callback) => {
   // const sql = 'INSERT INTO cursos SET ?;'
   // const values = { nome, cargahoraria }
   const sql = 'INSERT INTO users (fname, lname, office, cpf, password, email) VALUES (?, ?, ?, ?, ?, ?);'
-  const values = [fname, lname, office, cpf, password, email]
+  const values = [fname, lname, office, cpf, sha256(password), email]
 
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -129,4 +137,17 @@ export const updateUser = (user, callback) => {
   })
 }
 
-export default { listAllUsers, listId, createUser, deleteUser, updateUser, validateUser } 
+export const loginUser = (email, password, callback) => {
+  const sql = 'SELECT * FROM users WHERE email = ? AND password = ?;'
+  const value = [email, sha256(password)]
+  con.query(sql, value, (err, result) => {
+    if (err) {
+      callback(err, null)
+      console.log(`DB Error: ${err.sqlMessage}`)
+    } else {
+      callback(null, result)
+    }
+  })
+}
+
+export default { listAllUsers, listId, createUser, deleteUser, updateUser, validateUserToCreate, validateUserToUpdate, loginUser } 
