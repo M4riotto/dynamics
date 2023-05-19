@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17-Maio-2023 às 19:15
+-- Tempo de geração: 19-Maio-2023 às 22:44
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.0.13
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `dynamics`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `clients`
+--
+
+CREATE TABLE `clients` (
+  `id` int(11) NOT NULL,
+  `fname` varchar(200) NOT NULL,
+  `lname` varchar(200) NOT NULL,
+  `cpf` int(11) NOT NULL,
+  `dateOfBirth` date NOT NULL,
+  `phone` bigint(12) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `cep` int(8) DEFAULT NULL,
+  `houseNumber` bigint(20) NOT NULL,
+  `referencePoint` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -100,6 +121,12 @@ INSERT INTO `users` (`id`, `fname`, `lname`, `office`, `cpf`, `password`, `email
 --
 
 --
+-- Índices para tabela `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `products`
 --
 ALTER TABLE `products`
@@ -120,6 +147,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT de tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `products`

@@ -3,6 +3,7 @@ import cors from 'cors'
 import productRoutes from './routes/productRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import clientRoutes from './routes/clientRoutes.js'
 import { SERVER } from './config.js'
 
 const app = express()
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use('/product', productRoutes)
 app.use('/user/', userRoutes)
 app.use('/auth/', authRoutes)
+app.use('/client/', clientRoutes)
 
 app.all('*', (req, res) => {
   res.status(404).send('404 Rota não encontrada!')
