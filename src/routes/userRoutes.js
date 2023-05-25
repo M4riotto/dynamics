@@ -8,6 +8,7 @@ import {
   updateUser
 } from '../controllers/userCoutroller.js'
 
+
 const router = express.Router()
 
 router.get('/', listAllUsers)
