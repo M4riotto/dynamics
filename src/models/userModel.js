@@ -14,28 +14,28 @@ const userSchema = z.object({
       invalid_type_error: "lname deve ser uma string.",
     })
       .min(3, { message: "lname deve ter no mínimo 3 caracteres." })
-      .max(100, { message: "lname deve ter no máximo 100 caracteres." }),
+      .max(50, { message: "lname deve ter no máximo 50 caracteres." }),
   fname:
     z.string({
       required_error: "fname é obrigatória.",
       invalid_type_error: "fname deve ser uma string.",
     })
       .min(3, { message: "fname deve ter no mínimo 3 caracteres." })
-      .max(100, { message: "fname deve ter no máximo 100 caracteres." }),
+      .max(50, { message: "fname deve ter no máximo 50 caracteres." }),
   office:
     z.string({
       required_error: "office é obrigatória.",
       invalid_type_error: "office deve ser uma string.",
     })
-      .min(3, { message: "office deve ter no mínimo 3 caracteres." })
-      .max(100, { message: "office deve ter no máximo 100 caracteres." }),
+      .min(4, { message: "office deve ter no mínimo 4 caracteres." })
+      .max(50, { message: "office deve ter no máximo 50 caracteres." }),
   email:
     z.string({
       required_error: "Email é obrigatória.",
       invalid_type_error: "Email deve ser uma string.",
     })
       .email({ message: "Email Inválido." })
-      .min(5, { message: "O email deve ter ao menos 5 caracteres." })
+      .min(12, { message: "O email deve ter ao menos 12 caracteres." })
       .max(200, { message: "Email deve ter no máximo 200 caracteres." }),
   password:
     z.string({
@@ -47,10 +47,10 @@ const userSchema = z.object({
   cpf:
     z.string({
       required_error: "CPF é obrigatória.",
-      invalid_type_error: "AvaCPFtar deve ser uma string.",
+      invalid_type_error: "CPF deve ser uma string.",
     })
-      .min(14, { message: "CPF deve ter no mínimo 14 caracteres." })
-      .max(14, { message: "CPF deve ter no máximo 14 caracteres." }),
+      .min(11, { message: "CPF deve ter no mínimo 11 caracteres." })
+      .max(11, { message: "CPF deve ter no máximo 11 caracteres." }),
 })
 
 export const validateUserToCreate = (user) => {
@@ -59,11 +59,12 @@ export const validateUserToCreate = (user) => {
 }
 
 export const validateUserToUpdate = (user) => {
-  return userSchema.safeParse(user)
+  const partialUserSchema = userSchema.partial({ age: true });
+  return partialUserSchema.safeParse(user)
 }
 
 export const listAllUsers = (callback) => {
-  const sql = "SELECT * FROM users;"
+  const sql = "SELECT id, fname, lname, office, cpf, email, roles FROM users;"
   con.query(sql, (err, result) => {
     if (err) {
       callback(err, null)
@@ -74,15 +75,13 @@ export const listAllUsers = (callback) => {
   })
 }
 
-export const listId = (idUser, callback) => {
-  const sql = "SELECT * FROM users WHERE id = ?;"
-  const values = [idUser]
+export const listId = (id, callback) => {
+  const sql = "SELECT id, fname, lname, office, cpf, email, roles FROM users WHERE id = ?;"
+  const values = [id]
   con.query(sql, values, (err, result) => {
     if (err) {
       callback(err, null) //a funcao callback é obg a passar 2 parametros
       console.log(`DB Error: ${err.sqlMessage}`)
-    } else if (result.length === 0) {
-      result.message = "Id não encontrado"
     } else {
       callback(null, result)
     }
@@ -102,7 +101,6 @@ export const createUser = (user, callback) => {
       console.log(`DB Error: ${err.sqlMessage}`)
     } else {
       callback(null, result)
-      console.log('boa')
     }
   })
 }
@@ -110,9 +108,9 @@ export const createUser = (user, callback) => {
 export const deleteUser = (id, callback) => {
   // const id  = user
   const sql = 'DELETE FROM users WHERE id = ?;'
-  const values = [id]
+  const value = [id]
 
-  con.query(sql, values, (err, result) => {
+  con.query(sql, value, (err, result) => {
     if (err) {
       callback(err, null)
       console.log(`DB Error: ${err.sqlMessage}`)
@@ -137,9 +135,9 @@ export const updateUser = (user, callback) => {
   })
 }
 
-export const loginUser = (email, password, callback) => {
-  const sql = 'SELECT * FROM users WHERE email = ? AND password = ?;'
-  const value = [email, sha256(password)]
+export const loginUser = (cpf, password, callback) => {
+  const sql = 'SELECT * FROM users WHERE cpf = ? AND password = ?;'
+  const value = [cpf, sha256(password)]
   con.query(sql, value, (err, result) => {
     if (err) {
       callback(err, null)
