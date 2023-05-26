@@ -12,7 +12,7 @@ export const listAllProducts = (req, res) => {
   })
 }
 
-export const listId = (req, res) => {
+export const showId = (req, res) => {
   const id = req.params.id
   productModel.listId(id, (error, result) => {
     if (error)
