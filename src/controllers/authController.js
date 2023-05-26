@@ -2,11 +2,10 @@ import userModel from '../models/userModel.js'
 import sessionModel from '../models/sessionModel.js'
 import crypto from 'crypto'
 
-
 export const login = (req, res) => {
-  const { email, password } = req.body
+  const { cpf, password } = req.body
 
-  userModel.loginUser(email, password, (error, resultUser) => {
+  userModel.loginUser(cpf, password, (error, resultUser) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (resultUser) {
@@ -22,8 +21,8 @@ export const login = (req, res) => {
               message: "Usuário Logado!",
               token: token,
               user: {
-                name: resultUser[0].name,
-                email: resultUser[0].email,
+                fname: resultUser[0].fname,
+                cpf: resultUser[0].cpf,
                 roles: resultUser[0].roles
               }
             })
@@ -37,9 +36,9 @@ export const login = (req, res) => {
 }
 
 export const logout = (req, res) => {
-  const { email, token } = req.body
+  const { cpf, token } = req.body
 
-  sessionModel.deleteSession(email, token, (error, result) => {
+  sessionModel.deleteSession(cpf, token, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
