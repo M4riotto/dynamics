@@ -8,20 +8,20 @@ const userSchema = z.object({
       required_error: "ID é obrigatório.",
       invalid_type_error: "Id deve ser um número."
     }),
-  lname:
-    z.string({
-      required_error: "lname é obrigatória.",
-      invalid_type_error: "lname deve ser uma string.",
-    })
-      .min(3, { message: "lname deve ter no mínimo 3 caracteres." })
-      .max(50, { message: "lname deve ter no máximo 50 caracteres." }),
   fname:
     z.string({
       required_error: "fname é obrigatória.",
-      invalid_type_error: "fname deve ser uma string.",
+      invalid_type_error: "lname deve ser uma string.",
     })
       .min(3, { message: "fname deve ter no mínimo 3 caracteres." })
       .max(50, { message: "fname deve ter no máximo 50 caracteres." }),
+  lname:
+    z.string({
+      required_error: "lname é obrigatória.",
+      invalid_type_error: "fname deve ser uma string.",
+    })
+      .min(3, { message: "lname deve ter no mínimo 3 caracteres." })
+      .max(50, { message: "lname deve ter no máximo 50 caracteres." }),
   office:
     z.string({
       required_error: "office é obrigatória.",
@@ -29,21 +29,6 @@ const userSchema = z.object({
     })
       .min(4, { message: "office deve ter no mínimo 4 caracteres." })
       .max(50, { message: "office deve ter no máximo 50 caracteres." }),
-  email:
-    z.string({
-      required_error: "Email é obrigatória.",
-      invalid_type_error: "Email deve ser uma string.",
-    })
-      .email({ message: "Email Inválido." })
-      .min(12, { message: "O email deve ter ao menos 12 caracteres." })
-      .max(200, { message: "Email deve ter no máximo 200 caracteres." }),
-  password:
-    z.string({
-      required_error: "password é obrigatória.",
-      invalid_type_error: "Senha deve ser uma string.",
-    })
-      .min(6, { message: "Senha deve ter no mínimo 6 caracteres." })
-      .max(256, { message: "Senha deve ter no máximo 256 caracteres." }),
   cpf:
     z.string({
       required_error: "CPF é obrigatória.",
@@ -51,6 +36,21 @@ const userSchema = z.object({
     })
       .min(11, { message: "CPF deve ter no mínimo 11 caracteres." })
       .max(11, { message: "CPF deve ter no máximo 11 caracteres." }),
+  password:
+    z.string({
+      required_error: "password é obrigatória.",
+      invalid_type_error: "Senha deve ser uma string.",
+    })
+      .min(6, { message: "Senha deve ter no mínimo 6 caracteres." })
+      .max(256, { message: "Senha deve ter no máximo 256 caracteres." }),
+  email:
+    z.string({
+      required_error: "Email é obrigatória.",
+      invalid_type_error: "Email deve ser uma string.",
+    })
+      .email({ message: "Email Inválido." })
+      .min(12, { message: "O email deve ter ao menos 12 caracteres." })
+      .max(200, { message: "Email deve ter no máximo 200 caracteres." })
 })
 
 export const validateUserToCreate = (user) => {
@@ -59,7 +59,7 @@ export const validateUserToCreate = (user) => {
 }
 
 export const validateUserToUpdate = (user) => {
-  const partialUserSchema = userSchema.partial({ age: true });
+  const partialUserSchema = userSchema.partial({ password: true });
   return partialUserSchema.safeParse(user)
 }
 
@@ -75,7 +75,7 @@ export const listAllUsers = (callback) => {
   })
 }
 
-export const listId = (id, callback) => {
+export const showId = (id, callback) => {
   const sql = "SELECT id, fname, lname, office, cpf, email, roles FROM users WHERE id = ?;"
   const values = [id]
   con.query(sql, values, (err, result) => {
@@ -121,9 +121,9 @@ export const deleteUser = (id, callback) => {
 }
 
 export const updateUser = (user, callback) => {
-  const { id, fname, lname, office, cpf, password, email } = user
-  const sql = 'UPDATE users SET fname = ?, lname = ?, office = ?, password = ?, email = ?  WHERE id = ?;'
-  const values = [fname, lname, office, cpf, password, email, id]
+  const { id, fname, lname, office, cpf, email } = user
+  const sql = 'UPDATE users SET fname = ?, lname = ?, office = ?, cpf = ?, email = ?  WHERE id = ?;'
+  const values = [fname, lname, office, cpf, email, id]
 
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -148,4 +148,4 @@ export const loginUser = (cpf, password, callback) => {
   })
 }
 
-export default { listAllUsers, listId, createUser, deleteUser, updateUser, validateUserToCreate, validateUserToUpdate, loginUser } 
+export default { listAllUsers, showId, createUser, deleteUser, updateUser, validateUserToCreate, validateUserToUpdate, loginUser } 
