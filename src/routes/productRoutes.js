@@ -1,7 +1,7 @@
 import express from 'express'
 import {
   listAllProducts,
-  listId,
+  showId,
   createProducts,
   deleteProduct,
   deleteId,
@@ -11,7 +11,7 @@ import {
 const router = express.Router()
 
 router.get('/', listAllProducts) // SELECT
-router.get('/:id', listId)
+router.get('/:id', showId)
 router.post('/', createProducts) // INSERT
 router.delete('/', deleteProduct) // DELETE
 router.delete('/:id', deleteId) 
