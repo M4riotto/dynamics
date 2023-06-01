@@ -6,6 +6,7 @@ export const login = (req, res) => {
   const { cpf, password } = req.body
 
   userModel.loginUser(cpf, password, (error, resultUser) => {
+    
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (resultUser) {
