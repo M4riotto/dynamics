@@ -16,8 +16,8 @@ export const listAllUsers = (req, res) => {
   })
 }
 
-export const listId = (req, res) => {
-  const idUser = req.params.id
+export const showId = (req, res) => {
+  const id = req.params.id
 
   if (!id || isNaN(id)) {
     res.status(400).json({
@@ -29,21 +29,22 @@ export const listId = (req, res) => {
     return
   }
 
-  userModel.listId(idUser, (error, result) => {
+  userModel.showId(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result)
-    if (result.length) {
-      res.json(result[0])
-    } else {
-      res.status(404).json({ message: `User ${id} não encontrado!` })
+    if (result){
+      if (result.length) {
+        res.json(result[0])
+      } else {
+        res.status(404).json({ message: `User ${id} não encontrado!` })
+      }
     }
   })
 }
 
 export const createUser = (req, res) => {
-
   const user = req.body
+  console.log(user)
   const validUser = userModel.validateUserToCreate(user)
 
   if (validUser?.error) {
@@ -51,9 +52,7 @@ export const createUser = (req, res) => {
       message: 'Dados inválidos',
       fields: zodErrorFormat(validUser.error)
     })
-    return (
-      console.log(zodErrorFormat(validUser.error))
-    )
+    return
   }
 
   const userValidated = validUser.data
@@ -62,6 +61,7 @@ export const createUser = (req, res) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result){
+      delete user.password
       res.json({ 
         message: "Usuario Cadastrado!",
         user: {
@@ -75,6 +75,8 @@ export const createUser = (req, res) => {
 
 export const deleteUser = (req, res) => {
   const { id } = req.body
+  const idUserLogged = req.idUserLogged
+  const rolesUserLogged = req.rolesUserLogged
   if (!id || isNaN(id)) {
     res.status(400).json({
       message: 'Dados inválidos',
@@ -83,6 +85,14 @@ export const deleteUser = (req, res) => {
       }
     })
     return
+  }
+
+  //verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
+  if (!rolesUserLogged.includes('admin')) {
+    if (idUserLogged !== id) {
+      res.status(401).json({message: `Usuário não autorizado!`})
+      return
+    }
   }
 
   userModel.deleteUser(id, (error, result) => {
@@ -100,6 +110,8 @@ export const deleteUser = (req, res) => {
 
 export const deleteId = (req, res) => {
   const { id } = req.params
+  const idUserLogged = req.idUserLogged
+  const rolesUserLogged = req.rolesUserLogged
   if (!id || isNaN(id)) {
     res.status(400).json({
       message: 'Dados inválidos',
@@ -107,8 +119,17 @@ export const deleteId = (req, res) => {
         id: { messages: ['ID deve ser um número inteiro.'] }
       }
     })
-    return
+  return
   }
+
+  //verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
+  if (!rolesUserLogged.includes('admin')) {
+    if (idUserLogged !== id) {
+       res.status(401).json({ message: `Usuário não autorizado!` })
+      return
+    }
+  }
+  
 
   userModel.deleteUser(id, (error, result) => {
     if (error)
@@ -126,6 +147,8 @@ export const deleteId = (req, res) => {
 export const updateUser = (req, res) => {
   const user = req.body
   const validUser = userModel.validateUserToUpdate(user)
+  const idUserLogged = req.idUserLogged
+  const rolesUserLogged = req.rolesUserLogged
   if (validUser?.error) {
     res.status(400).json({
       message: 'Dados inválidos',
@@ -133,8 +156,17 @@ export const updateUser = (req, res) => {
     })
     return
   }
+
   const userValidated = validUser.data
-  //TODO Verificar se os dados são válidos
+
+  // verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
+  if (!rolesUserLogged.includes('admin')) {
+    if (idUserLogged !== user.id) {
+      res.status(401).json({ message: `Usuário não autorizado!` })
+      return
+    }
+  }
+  
   userModel.updateUser(userValidated, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })

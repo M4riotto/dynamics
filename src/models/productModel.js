@@ -12,7 +12,7 @@ export const listAllProduct = (callback) => {
   })
 }
 
-export const listId = (id, callback) => {
+export const showId = (id, callback) => {
   const sql = "SELECT * FROM products WHERE id = ?;"
   const values = [id]
   con.query(sql, values, (err, result) => {
@@ -73,4 +73,4 @@ export const updateProduct = (product, callback) => {
   })
 }
 
-export default { listAllProduct, listId, createProduct, deleteProduct, updateProduct }
+export default { listAllProduct, showId, createProduct, deleteProduct, updateProduct }

@@ -2,9 +2,9 @@ import productModel from '../models/productModel.js'
 
 export const listAllProducts = (req, res) => {
   productModel.listAllProduct((error, result) => {
-    if (error){
-      res.status(500).json({ message: "Erro no Banco de Dados" })}
-    else if (result.length){
+    if (error)
+      res.status(500).json({ message: "Erro no Banco de Dados" })
+    if (result.length){
       res.json(result)
     } else{
       res.json({ message: "Nenhum produto cadastrado!" })
@@ -12,13 +12,18 @@ export const listAllProducts = (req, res) => {
   })
 }
 
-export const listId = (req, res) => {
+export const showId = (req, res) => {
   const id = req.params.id
   productModel.listId(id, (error, result) => {
-    if (error) 
+    if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result)
-      res.json(result)
+    if (result) {
+      if (result.length) {
+        res.json(result[0])
+      } else {
+        res.status(404).json({ message: `Curso ${id} não encontrado!` })
+      }
+    }
   })
 }
 
@@ -31,7 +36,7 @@ export const createProducts = (req, res) => {
     if (result) {
       res.json({ 
         message: "Produto Cadastrado!",
-        course:{
+        product:{
           id: result.insertId,
           ...product
         } 
