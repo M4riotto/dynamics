@@ -4,6 +4,8 @@
 --
 -- Host: 127.0.0.1
 -- Tempo de geração: 19-Maio-2023 às 19:15
+-- Tempo de geração: 17-Maio-2023 às 19:15
+-- Tempo de geração: 16-Maio-2023 às 22:34
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.0.13
 
@@ -113,12 +115,9 @@ INSERT INTO `users` (`id`, `fname`, `lname`, `office`, `cpf`, `password`, `email
 (4, 'Nata', 'Mendes', 'Dev Junior', 551875, '3cbe64eb45ee11ec63f0ab109169f6a934ef1168ca01899f0c1e5fbb32346574', 'nata_mendes@gmail.com', ''),
 (5, 'Renan', 'Cavichi', 'Dev Senior', 531855, '63e3ca6db02a52b901e682868ab41a1e3032f9f52dd2dad931c98847780f8de7', 'renancavichi@gmail.com', ''),
 (6, 'Moreira', 'Moreira', 'dev junnior', 490401, 'b8627206beb9e3b1bc6c65f3292d35fc8be5e1a2a764ad3ff2efe3c73b3ab77a', 'teste@gmail.com', ''),
-<<<<<<<<< Temporary merge branch 1
 (7, 'jubieleu', 'Moreira', 'dev junnior', 490401, 'b8627206beb9e3b1bc6c65f3292d35fc8be5e1a2a764ad3ff2efe3c73b3ab77a', 'teste@gmail.com', ''),
 (8, 'villa', 'josue', 'dev senior', 490401, 'db0b535428ac709e69473e02f1d00bbb301f0adab3a40fa823da586d3eb45867', 'teste@gmail.com', '');
-=========
-(7, 'jubieleu', 'Moreira', 'dev junnior', 490401, 'b8627206beb9e3b1bc6c65f3292d35fc8be5e1a2a764ad3ff2efe3c73b3ab77a', 'teste@gmail.com', '');
->>>>>>>>> Temporary merge branch 2
+
 
 --
 -- Índices para tabelas despejadas
@@ -168,11 +167,8 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-<<<<<<<<< Temporary merge branch 1
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-=========
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
->>>>>>>>> Temporary merge branch 2
 
 --
 -- Restrições para despejos de tabelas
