@@ -3,7 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01-Jun-2023 às 22:13
+-- Tempo de geração: 17-Maio-2023 às 19:15
+-- Tempo de geração: 16-Maio-2023 às 22:34
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.0.13
 
@@ -20,6 +21,27 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `dynamics`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `clients`
+--
+
+CREATE TABLE `clients` (
+  `id` int(11) NOT NULL,
+  `fname` varchar(200) NOT NULL,
+  `lname` varchar(200) NOT NULL,
+  `cpf` int(11) NOT NULL,
+  `dateOfBirth` date NOT NULL,
+  `phone` bigint(12) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `cep` int(8) DEFAULT NULL,
+  `houseNumber` bigint(20) NOT NULL,
+  `referencePoint` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -64,17 +86,6 @@ CREATE TABLE `sessions` (
   `session` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Extraindo dados da tabela `sessions`
---
-
-INSERT INTO `sessions` (`id`, `id_user`, `session`) VALUES
-(0, 21, 5),
-(0, 21, 15),
-(0, 21, 57728),
-(0, 21, 6),
-(0, 21, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -86,7 +97,7 @@ CREATE TABLE `users` (
   `fname` varchar(200) NOT NULL,
   `lname` varchar(200) NOT NULL,
   `office` varchar(50) NOT NULL,
-  `cpf` varchar(11) NOT NULL,
+  `cpf` int(11) NOT NULL,
   `password` varchar(257) NOT NULL,
   `email` varchar(200) NOT NULL,
   `token` varchar(256) NOT NULL
@@ -97,27 +108,78 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fname`, `lname`, `office`, `cpf`, `password`, `email`, `token`) VALUES
-(21, 'Manoela', 'Larissa', 'Atriz', '49047138855', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'teste@gmail.com', '');
+(1, 'Giovanna', 'Siqueira', 'Dev Junior', 490441, '63e3ca6db02a52b901e682868ab41a1e3032f9f52dd2dad931c98847780f8de7', 'siqueira.nicolau@aluno.ifsp.edu.br', ''),
+(2, 'Vítor', 'Moreira', 'Dev Junior', 490471, '3cbe64eb45ee11ec63f0ab109169f6a934ef1168ca01899f0c1e5fbb32346574', 'vitor.moreira@aluno.ifsp.edu.br', ''),
+(3, 'Vítor', 'Barreto', 'Dev Junior', 450491, '63e3ca6db02a52b901e682868ab41a1e3032f9f52dd2dad931c98847780f8de7', 'vitor@gmail.com', ''),
+(4, 'Nata', 'Mendes', 'Dev Junior', 551875, '3cbe64eb45ee11ec63f0ab109169f6a934ef1168ca01899f0c1e5fbb32346574', 'nata_mendes@gmail.com', ''),
+(5, 'Renan', 'Cavichi', 'Dev Senior', 531855, '63e3ca6db02a52b901e682868ab41a1e3032f9f52dd2dad931c98847780f8de7', 'renancavichi@gmail.com', ''),
+(6, 'Moreira', 'Moreira', 'dev junnior', 490401, 'b8627206beb9e3b1bc6c65f3292d35fc8be5e1a2a764ad3ff2efe3c73b3ab77a', 'teste@gmail.com', ''),
+<<<<<<<<< Temporary merge branch 1
+(7, 'jubieleu', 'Moreira', 'dev junnior', 490401, 'b8627206beb9e3b1bc6c65f3292d35fc8be5e1a2a764ad3ff2efe3c73b3ab77a', 'teste@gmail.com', ''),
+(8, 'villa', 'josue', 'dev senior', 490401, 'db0b535428ac709e69473e02f1d00bbb301f0adab3a40fa823da586d3eb45867', 'teste@gmail.com', '');
+
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
+-- Índices para tabela `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `sessions`
+--
+ALTER TABLE `sessions`
+  ADD KEY `fk_id_user` (`id`);
+
+--
 -- Índices para tabela `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`,`cpf`);
 
 --
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
+-- AUTO_INCREMENT de tabela `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+<<<<<<<<< Temporary merge branch 1
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `sessions`
+--
+ALTER TABLE `sessions`
+  ADD CONSTRAINT `fk_id_user` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
