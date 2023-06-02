@@ -13,21 +13,21 @@ const userSchema = z.object({
       required_error: "fname é obrigatória.",
       invalid_type_error: "lname deve ser uma string.",
     })
-      .min(3, { message: "fname deve ter no mínimo 3 caracteres." })
+      .min(1, { message: "fname deve ter no mínimo 3 caracteres." })
       .max(50, { message: "fname deve ter no máximo 50 caracteres." }),
   lname:
     z.string({
       required_error: "lname é obrigatória.",
       invalid_type_error: "fname deve ser uma string.",
     })
-      .min(3, { message: "lname deve ter no mínimo 3 caracteres." })
+      .min(1, { message: "lname deve ter no mínimo 3 caracteres." })
       .max(50, { message: "lname deve ter no máximo 50 caracteres." }),
   office:
     z.string({
       required_error: "office é obrigatória.",
       invalid_type_error: "office deve ser uma string.",
     })
-      .min(4, { message: "office deve ter no mínimo 4 caracteres." })
+      .min(1, { message: "office deve ter no mínimo 4 caracteres." })
       .max(50, { message: "office deve ter no máximo 50 caracteres." }),
   cpf:
     z.string({

@@ -4,6 +4,10 @@ import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import clientRoutes from './routes/clientRoutes.js'
 import { SERVER } from './config.js'
+import logger from './middlewares/logger.js'
+import authRoutes from './middlewares/authenticated.js'
+import errorHandler from './middlewares/errorHandler.js'
+
 
 const app = express()
 const port = SERVER.PORT

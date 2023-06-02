@@ -1,4 +1,6 @@
 import productModel from '../models/productModel.js'
+import zodErrorFormat from '../helper/zodErrorFormat.js'
+
 
 export const listAllProducts = (req, res) => {
   productModel.listAllProduct((error, result) => {
@@ -28,20 +30,28 @@ export const showId = (req, res) => {
 }
 
 export const createProducts = (req, res) => {
-  const product = req.body
-  //TODO Verificar se os dados são válidos
-  productModel.createProduct(product, (error, result) => {
+  const products = req.body
+  console.log(products)
+  const validProducts = productsModel.validateProductsToCreate(products)
+
+  if (validProducts?.error) {
+    res.status(400).json({
+      message: 'Dados inválidos',
+      fields: zodErrorFormat(validProducts.error)
+    })
+    return
+  }
+
+  const productsValidated = validProducts.data
+
+  productsModel.createProducts(productsValidated, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result) {
+    if (result){
       res.json({ 
         message: "Produto Cadastrado!",
-        product:{
-          id: result.insertId,
-          ...product
-        } 
       })
-    } 
+    }
   })
 }
 
@@ -77,17 +87,37 @@ export const deleteId = (req, res) => {
   })
 }
 
-export const updateProduct = (req, res) => {
-  const product = req.body
-  //TODO Verificar se os dados são válidos
-  productModel.updateProduct(product, (error, result) => {
+export const updateProducts = (req, res) => {
+  const products = req.body
+  const validProducts = productsModel.validateProductsToUpdate(products)
+  const idProductsLogged = req.idProductsLogged
+  const rolesProductsLogged = req.rolesProductsLogged
+  if (validProducts?.error) {
+    res.status(400).json({
+      message: 'Dados inválidos',
+      fields: zodErrorFormat(validProducts.error)
+    })
+    return
+  }
+
+  const productsValidated = validProducts.data
+
+  // verifica se o usuário é um admin ou se o id do products da sessão é igual ao do products para deletar
+  if (!rolesProductsLogged.includes('admin')) {
+    if (idProductsLogged !== products.id) {
+      res.status(401).json({ message: `Usuário não autorizado!` })
+      return
+    }
+  }
+  
+  productsModel.updateProducts(productsValidated, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
       if (result.affectedRows) {
         res.json({ message: "Produto Atualizado com sucesso!" })
       } else {
-        res.status(404).json({ message: `Produto ${course.id} não encontrado!` })
+        res.status(404).json({ message: `Produto ${products.id} não encontrado!` })
       }
     }
   })
