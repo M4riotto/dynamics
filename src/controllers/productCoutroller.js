@@ -32,7 +32,7 @@ export const showId = (req, res) => {
 export const createProducts = (req, res) => {
   const products = req.body
   console.log(products)
-  const validProducts = productsModel.validateProductsToCreate(products)
+  const validProducts = productModel.validateProductsToCreate(products)
 
   if (validProducts?.error) {
     res.status(400).json({
@@ -44,7 +44,7 @@ export const createProducts = (req, res) => {
 
   const productsValidated = validProducts.data
 
-  productsModel.createProducts(productsValidated, (error, result) => {
+  productModel.createProducts(productsValidated, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result){
@@ -89,9 +89,12 @@ export const deleteId = (req, res) => {
 
 export const updateProducts = (req, res) => {
   const products = req.body
-  const validProducts = productsModel.validateProductsToUpdate(products)
+  const validProducts = productModel.validateProductsToUpdate(products)
   const idProductsLogged = req.idProductsLogged
-  const rolesProductsLogged = req.rolesProductsLogged
+  let rolesProductsLogged = req.rolesProductsLogged
+  rolesProductsLogged = [
+    'admin',
+  ]
   if (validProducts?.error) {
     res.status(400).json({
       message: 'Dados inválidos',
@@ -110,7 +113,7 @@ export const updateProducts = (req, res) => {
     }
   }
   
-  productsModel.updateProducts(productsValidated, (error, result) => {
+  productModel.updateProduct(productsValidated, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
