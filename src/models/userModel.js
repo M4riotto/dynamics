@@ -4,7 +4,7 @@ import sha256 from '../helper/sha256.js'
 
 const userSchema = z.object({
   id:
-    z.number({ 
+    z.number({
       required_error: "ID é obrigatório.",
       invalid_type_error: "Id deve ser um número."
     }),
@@ -84,6 +84,7 @@ export const showId = (id, callback) => {
       console.log(`DB Error: ${err.sqlMessage}`)
     } else {
       callback(null, result)
+
     }
   })
 }
@@ -135,6 +136,27 @@ export const updateUser = (user, callback) => {
   })
 }
 
+// Método assíncrono para buscar um usuário pelo email
+export const findUserByEmail = (user, callback) => {
+  const { cpf, email } = user
+  const sql = 'Select fname FROM usrs WHERE cpf = ? AND email = ?;'
+  const values = [cpf, email]
+
+  con.query(sql, values, (err, result) => {
+    if (err) {
+      callback(err, null)
+      console.log(`DB Error: ${err.sqlMessage}`)
+    } else {
+      const findUserEnc = result
+      console.log(findUserEnc[0].fname)
+      callback(null, result)
+      return findUserEnc[0].fname
+    }
+  })
+
+}
+
+
 export const loginUser = (cpf, password, callback) => {
 
   const hashPass = sha256(password)
@@ -153,4 +175,4 @@ export const loginUser = (cpf, password, callback) => {
   })
 }
 
-export default { listAllUsers, showId, createUser, deleteUser, updateUser, validateUserToCreate, validateUserToUpdate, loginUser } 
+export default { listAllUsers, showId, createUser, deleteUser, updateUser, validateUserToCreate, validateUserToUpdate, loginUser, findUserByEmail } 
