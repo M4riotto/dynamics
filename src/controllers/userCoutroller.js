@@ -63,6 +63,9 @@ export const createUser = async (req, res) => {
     console.log(findUser)
     if (findUser) {
       console.log('já existe')
+      res.json({
+        message: "Usuário não Cadastrado!",
+      })
       return
     }
   } catch (error) {
