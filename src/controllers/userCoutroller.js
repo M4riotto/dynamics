@@ -42,7 +42,9 @@ export const showId = (req, res) => {
   })
 }
 
-export const createUser = (req, res) => {
+
+
+export const createUser = async (req, res) => {
   const user = req.body
   console.log(user)
 
@@ -56,14 +58,18 @@ export const createUser = (req, res) => {
     return
   }
 
-  const findUser = userModel.findUserByEmail(user);
-  console.log(findUser)
-  if (findUser) {
-    console.log('ja existee')
-    return
+  try {
+    const findUser = await userModel.findUserByEmail(user)
+    console.log(findUser)
+    if (findUser) {
+      console.log('já existe')
+      return
+    }
+  } catch (error) {
+    console.log(error)
   }
+
   console.log('passou de mais')
-  return
 
   const userValidated = validUser.data
 
@@ -73,7 +79,7 @@ export const createUser = (req, res) => {
     if (result) {
       delete user.password
       res.json({
-        message: "Usuario Cadastrado!",
+        message: "Usuário Cadastrado!",
         user: {
           id: result.insertId,
           ...user
@@ -82,6 +88,7 @@ export const createUser = (req, res) => {
     }
   })
 }
+
 
 export const deleteUser = (req, res) => {
   const { id } = req.body

@@ -137,23 +137,24 @@ export const updateUser = (user, callback) => {
 }
 
 // Método assíncrono para buscar um usuário pelo email
-export const findUserByEmail = (user, callback) => {
-  const { cpf, email } = user
-  const sql = 'Select fname FROM usrs WHERE cpf = ? AND email = ?;'
-  const values = [cpf, email]
+export const findUserByEmail = (user) => {
+  return new Promise((resolve, reject) => {
+    const { cpf, email } = user
+    const sql = 'SELECT fname FROM users WHERE cpf = ? AND email = ?;'
+    const values = [cpf, email]
 
-  con.query(sql, values, (err, result) => {
-    if (err) {
-      callback(err, null)
-      console.log(`DB Error: ${err.sqlMessage}`)
-    } else {
-      const findUserEnc = result
-      console.log(findUserEnc[0].fname)
-      callback(null, result)
-      return findUserEnc[0].fname
-    }
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        console.log(`DB Error: ${err.sqlMessage}`)
+        reject(err)
+      } else if (result.length === 0) {
+        reject(new Error('User not found'))
+      } else {
+        const findUserEnc = result
+        resolve (findUserEnc[0].fname)
+      }
+    })
   })
-
 }
 
 
