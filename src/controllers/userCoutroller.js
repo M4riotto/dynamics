@@ -5,14 +5,14 @@ export const listAllUsers = (req, res) => {
   userModel.listAllUsers((error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result){
-      if (result.length){
+    if (result) {
+      if (result.length) {
         res.json(result)
-      } else{
-        res.json({ message: "Nenhum usuário cadastrado!"})
+      } else {
+        res.json({ message: "Nenhum usuário cadastrado!" })
       }
     }
-     
+
   })
 }
 
@@ -32,7 +32,7 @@ export const showId = (req, res) => {
   userModel.showId(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result){
+    if (result) {
       if (result.length) {
         res.json(result[0])
       } else {
@@ -42,9 +42,12 @@ export const showId = (req, res) => {
   })
 }
 
-export const createUser = (req, res) => {
+
+
+export const createUser = async (req, res) => {
   const user = req.body
   console.log(user)
+
   const validUser = userModel.validateUserToCreate(user)
 
   if (validUser?.error) {
@@ -55,15 +58,31 @@ export const createUser = (req, res) => {
     return
   }
 
+  try {
+    const findUser = await userModel.findUserByEmail(user)
+    console.log(findUser)
+    if (findUser) {
+      console.log('já existe')
+      res.json({
+        message: "Usuário não Cadastrado!",
+      })
+      return
+    }
+  } catch (error) {
+    console.log(error)
+  }
+
+  console.log('passou de mais')
+
   const userValidated = validUser.data
 
   userModel.createUser(userValidated, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result){
+    if (result) {
       delete user.password
-      res.json({ 
-        message: "Usuario Cadastrado!",
+      res.json({
+        message: "Usuário Cadastrado!",
         user: {
           id: result.insertId,
           ...user
@@ -72,6 +91,7 @@ export const createUser = (req, res) => {
     }
   })
 }
+
 
 export const deleteUser = (req, res) => {
   const { id } = req.body
@@ -90,7 +110,7 @@ export const deleteUser = (req, res) => {
   //verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
   if (!rolesUserLogged.includes('admin')) {
     if (idUserLogged !== id) {
-      res.status(401).json({message: `Usuário não autorizado!`})
+      res.status(401).json({ message: `Usuário não autorizado!` })
       return
     }
   }
@@ -98,11 +118,11 @@ export const deleteUser = (req, res) => {
   userModel.deleteUser(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result){
-      if (result.affectedRows){
+    if (result) {
+      if (result.affectedRows) {
         res.json({ message: "Usuario Deletado com sucesso!" })
-      } else{
-        res.status(404).json({ message: `Usuário ${id} não encontrado!`})
+      } else {
+        res.status(404).json({ message: `Usuário ${id} não encontrado!` })
       }
     }
   })
@@ -119,17 +139,17 @@ export const deleteId = (req, res) => {
         id: { messages: ['ID deve ser um número inteiro.'] }
       }
     })
-  return
+    return
   }
 
   //verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
   if (!rolesUserLogged.includes('admin')) {
     if (idUserLogged !== id) {
-       res.status(401).json({ message: `Usuário não autorizado!` })
+      res.status(401).json({ message: `Usuário não autorizado!` })
       return
     }
   }
-  
+
 
   userModel.deleteUser(id, (error, result) => {
     if (error)
@@ -166,7 +186,7 @@ export const updateUser = (req, res) => {
       return
     }
   }
-  
+
   userModel.updateUser(userValidated, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
