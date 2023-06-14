@@ -1,10 +1,10 @@
-import ClientModel from '../models/clientsModel.js'
+import clientsModel from '../models/clientsModel.js'
 
 export const listAllClients = (req, res) => {
-  ClientModel.listAllClient((error, result) => {
-    if (error){
-      res.status(500).json({ message: "Erro no Banco de Dados" })}
-    else if (result.length){
+  clientsModel.listAllClient((error, result) => {
+    if (error)
+      res.status(500).json({ message: "Erro no Banco de Dados" })
+    if (result.length){
       res.json(result)
     } else{
       res.json({ message: "Nenhum cliente cadastrado!" })
@@ -14,7 +14,7 @@ export const listAllClients = (req, res) => {
 
 export const showId = (req, res) => {
   const id = req.params.id
-  ClientModel.showId(id, (error, result) => {
+  clientsModel.showId(id, (error, result) => {
     if (error) 
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result)
@@ -25,7 +25,7 @@ export const showId = (req, res) => {
 export const createClients = (req, res) => {
   const client = req.body
   //TODO Verificar se os dados são válidos
-  ClientModel.createClient(client, (error, result) => {
+  clientsModel.createClient(client, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
@@ -43,7 +43,7 @@ export const createClients = (req, res) => {
 export const deleteClients = (req, res) => {
   const { id } = req.body
   //TODO Verificar se os dados são válidos
-  ClientModel.deleteClient(id, (error, result) => {
+  clientsModel.deleteClient(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result){
@@ -59,7 +59,7 @@ export const deleteClients = (req, res) => {
 export const deleteId = (req, res) => {
   const { id } = req.params
   //TODO Verificar se os dados são válidos
-  ClientModel.deleteClient(id, (error, result) => {
+  clientsModel.deleteClient(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
@@ -74,8 +74,9 @@ export const deleteId = (req, res) => {
 
 export const updateClients = (req, res) => {
   const client = req.body
+  console.log(client)
   //TODO Verificar se os dados são válidos
-  ClientModel.updateClient(client, (error, result) => {
+  clientsModel.updateClient(client, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
