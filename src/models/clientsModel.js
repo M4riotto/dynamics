@@ -9,54 +9,54 @@ const clientSchema = z.object({
     }),
   fname:
     z.string({
-      required_error: "lname é obrigatória.",
-      invalid_type_error: "lname deve ser uma string.",
+      required_error: "Nome é obrigatório.",
+      invalid_type_error: "Nome deve ser uma string.",
     })
-      .min(3, { message: "lname deve ter no mínimo 3 caracteres." })
-      .max(200, { message: "lname deve ter no máximo 200 caracteres." }),
+      .min(3, { message: "Nome deve ter no mínimo 3 caracteres." })
+      .max(20, { message: "Nome deve ter no máximo 20 caracteres." }),
   lname:
     z.string({
-      required_error: "fname é obrigatória.",
-      invalid_type_error: "fname deve ser uma string.",
+      required_error: "Sobrenome é obrigatória.",
+      invalid_type_error: "Sobrenome deve ser uma string.",
     })
-      .min(3, { message: "fname deve ter no mínimo 3 caracteres." })
-      .max(200, { message: "fname deve ter no máximo 200 caracteres." }),
+      .min(3, { message: "Sobrenome deve ter no mínimo 3 caracteres." })
+      .max(70, { message: "Sobrenome deve ter no máximo 70 caracteres." }),
   cpf:
     z.number({
-      required_error: "cpf é obrigatório",
-      invalid_type_error: "cpf deve ser um int",
+      required_error: "CPF é obrigatório.",
+      invalid_type_error: "CPF deve ser um número.",
     })
-      .min(14, { message: "cpf deve ter no minimo 14 caracteres" })
-      .max(14, { message: "cpf deve ter no maximo 14 caracteres" }),
+      .min(11, { message: "CPF deve ter no minimo 11 caracteres." })
+      .max(11, { message: "CPF deve ter no maximo 11 caracteres." }),
   dateOfBirth:
     z.string({
-      required_error: "Data é obrigatória",
-      invalid_type_error: "Data deve ser em int",
+      required_error: "Data é obrigatória.",
+      invalid_type_error: "Data deve ser em números.",
     })
-      .min(10, { message: "data deve ter no mínimo 10 caracteres." })
-      .max(10, { message: "data deve ter no máximo 10 caracteres." }),
+      .min(10, { message: "Data deve ter no mínimo 10 caracteres." })
+      .max(10, { message: "Data deve ter no máximo 10 caracteres." }),
   phone:
     z.string({
-      required_error: "phone é obrigatória.",
-      invalid_type_error: "phone deve ser um string",
+      required_error: "Telefone é obrigatório.",
+      invalid_type_error: "Telefone deve ser um string.",
     })
-      .min(10, { message: "CPF deve ter no mínimo 10 caracteres." })
-      .max(14, { message: "CPF deve ter no máximo 14 caracteres." }),
+      .min(10, { message: "Telefone deve ter no mínimo 10 caracteres." })
+      .max(14, { message: "Telefone deve ter no máximo 14 caracteres." }),
   email:
     z.string({
-      required_error: "Email é obrigatória.",
-      invalid_type_error: "Email deve ser uma string.",
+      required_error: "E-mail é obrigatória.",
+      invalid_type_error: "E-mail deve ser uma string.",
     })
-      .email({ message: "Email Inválido." })
-      .min(5, { message: "O email deve ter ao menos 5 caracteres." })
-      .max(200, { message: "Email deve ter no máximo 200 caracteres." }),
+      .email({ message: "E-mail Inválido." })
+      .min(10, { message: "E-mail deve ter no mínimo 10 caracteres." })
+      .max(200, { message: "E-mail deve ter no máximo 200 caracteres." }),
   address:
     z.string({
-      required_error: "address é obrigatória.",
-      invalid_type_error: "address deve ser uma string.",
+      required_error: "Endereço é obrigatório.",
+      invalid_type_error: "Endereço deve ser uma string.",
     })
-      .min(3, { message: "address deve ter no mínimo 3 caracteres." })
-      .max(100, { message: "address deve ter no máximo 100 caracteres." }),
+      .min(3, { message: "Endereço deve ter no mínimo 3 caracteres." })
+      .max(100, { message: "Endereço deve ter no máximo 100 caracteres." }),
   street:
     z.string({
       required_error: "Rua é obrigatória.",
@@ -66,37 +66,35 @@ const clientSchema = z.object({
       .max(256, { message: "Rua deve ter no máximo 256 caracteres." }),
   cep:
     z.string({
-      invalid_type_error: "cep deve ser um bigint.",
+      invalid_type_error: "CEP deve ser um número.",
     })
-      .min(8, { message: "CPF deve ter no mínimo 8 caracteres." })
-      .max(9, { message: "CPF deve ter no máximo 9 caracteres." }),
+      .min(8, { message: "CEP deve ter no mínimo 8 caracteres." })
+      .max(9, { message: "CEP deve ter no máximo 9 caracteres." }),
   houseNumber:
     z.bigint({
-      required_error: "house number é obrigatória.",
-      invalid_type_error: "house number deve ser uma string.",
+      required_error: "Número da casa é obrigatório.",
+      invalid_type_error: "Número da casa deve ser uma string.",
     })
-      .min(20, { message: "house number deve ter no mínimo 20 caracteres." })
-      .max(20, { message: "house number deve ter no máximo 20 caracteres." }),
+      .min(20, { message: "Número da casa deve ter no mínimo 20 caracteres." })
+      .max(20, { message: "Número da casa deve ter no máximo 20 caracteres." }),
   referencePoint:
     z.string({
-      invalid_type_error: "referencePoint deve ser uma string.",
+      invalid_type_error: "Ponto de referencia deve ser uma string.",
     })
-      .min(3, { message: "referencePoint deve ter no mínimo 3 caracteres." })
-      .max(200, { message: "referencePoint deve ter no máximo 200 caracteres." }),
-
-
+      .min(3, { message: "Ponto de referencia deve ter no mínimo 3 caracteres." })
+      .max(200, { message: "Ponto de referencia deve ter no máximo 200 caracteres." }),
 })
 
-export const validateclientToCreate = (client) => {
+export const validateClientToCreate = (client) => {
   const partialclientSchema = clientSchema.partial({ id: true });
   return partialclientSchema.safeParse(client)
 }
 
-export const validateclientToUpdate = (client) => {
+export const validateClientToUpdate = (client) => {
   return clientSchema.safeParse(client)
 }
 
-export const listAllclients = (callback) => {
+export const listAllClient = (callback) => {
   const sql = "SELECT * FROM clients;"
   con.query(sql, (err, result) => {
     if (err) {
@@ -108,7 +106,7 @@ export const listAllclients = (callback) => {
   })
 }
 
-export const listId = (idclient, callback) => {
+export const showId = (idclient, callback) => {
   const sql = "SELECT * FROM clients WHERE id = ?;"
   const values = [idclient]
   con.query(sql, values, (err, result) => {
@@ -123,7 +121,7 @@ export const listId = (idclient, callback) => {
   })
 }
 
-export const createclient = (client, callback) => {
+export const createClient = (client, callback) => {
   const {fname, lname, cpf, dateOfBirth, phone, email, address, street, cep, houseNumber, referencePoint} = client
   // const sql = 'INSERT INTO cursos SET ?;'
   // const values = { nome, cargahoraria }
@@ -141,7 +139,7 @@ export const createclient = (client, callback) => {
   })
 }
 
-export const deleteclient = (id, callback) => {
+export const deleteClient = (id, callback) => {
   // const id  = client
   const sql = 'DELETE FROM clients WHERE id = ?;'
   const values = [id]
@@ -156,7 +154,7 @@ export const deleteclient = (id, callback) => {
   })
 }
 
-export const updateclient = (client, callback) => {
+export const updateClient = (client, callback) => {
   const { id, fname, lname, cpf, dateOfBirth, phone, email, address, street, cep, houseNumber, referencePoint} = client
   const sql = 'UPDATE clients SET fname = ? , lname = ? , cpf = ? , dateOfBirth = ? , phone = ? , email = ? , address = ? , street = ? , cep = ? , houseNumber = ? , referencePoint = ?  WHERE id = ?;'
   const values = [fname, lname, cpf, dateOfBirth, phone, email, address, street, cep, houseNumber, referencePoint]
@@ -171,6 +169,4 @@ export const updateclient = (client, callback) => {
   })
 }
 
-
-
-export default { listAllclients, listId, createclient, deleteclient, updateclient, validateclientToCreate, validateclientToUpdate, } 
+export default { listAllClient, showId, createClient, deleteClient, updateClient, validateClientToCreate, validateClientToUpdate, }

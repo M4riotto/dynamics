@@ -1,7 +1,7 @@
 import ClientModel from '../models/clientsModel.js'
 
-export const listAllclients = (req, res) => {
-  ClientModel.listAllclient((error, result) => {
+export const listAllClients = (req, res) => {
+  ClientModel.listAllClient((error, result) => {
     if (error){
       res.status(500).json({ message: "Erro no Banco de Dados" })}
     else if (result.length){
@@ -12,9 +12,9 @@ export const listAllclients = (req, res) => {
   })
 }
 
-export const listId = (req, res) => {
+export const showId = (req, res) => {
   const id = req.params.id
-  ClientModel.listId(id, (error, result) => {
+  ClientModel.showId(id, (error, result) => {
     if (error) 
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result)
@@ -22,35 +22,35 @@ export const listId = (req, res) => {
   })
 }
 
-export const createclients = (req, res) => {
-  const Client = req.body
+export const createClients = (req, res) => {
+  const client = req.body
   //TODO Verificar se os dados são válidos
-  ClientModel.createclient(Client, (error, result) => {
+  ClientModel.createClient(client, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
       res.json({ 
-        message: "cliente Cadastrado!",
+        message: "Cliente Cadastrado!",
         course:{
           id: result.insertId,
-          ...Client
+          ...client
         } 
       })
     } 
   })
 }
 
-export const deleteclient = (req, res) => {
+export const deleteClients = (req, res) => {
   const { id } = req.body
   //TODO Verificar se os dados são válidos
-  ClientModel.deleteclient(id, (error, result) => {
+  ClientModel.deleteClient(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result){
       if (result.affectedRows){
-        res.json({ message: "cliente Deletado com sucesso!" })
+        res.json({ message: "Cliente Deletado com sucesso!" })
       } else{
-        res.status(404).json({ message: `cliente ${id} não encontrado!` })
+        res.status(404).json({ message: `Cliente ${id} não encontrado!` })
       }
     }
   })
@@ -59,30 +59,30 @@ export const deleteclient = (req, res) => {
 export const deleteId = (req, res) => {
   const { id } = req.params
   //TODO Verificar se os dados são válidos
-  ClientModel.deleteclient(id, (error, result) => {
+  ClientModel.deleteClient(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
       if (result.affectedRows) {
-        res.json({ message: "cliente Deletado com sucesso!" })
+        res.json({ message: "Cliente Deletado com sucesso!" })
       } else {
-        res.status(404).json({ message: `cliente ${id} não encontrado!` })
+        res.status(404).json({ message: `Cliente ${id} não encontrado!` })
       }
     }
   })
 }
 
-export const updateclient = (req, res) => {
-  const Client = req.body
+export const updateClients = (req, res) => {
+  const client = req.body
   //TODO Verificar se os dados são válidos
-  ClientModel.updateClient(Client, (error, result) => {
+  ClientModel.updateClient(client, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
       if (result.affectedRows) {
-        res.json({ message: "cliente Atualizado com sucesso!" })
+        res.json({ message: "Cliente Atualizado com sucesso!" })
       } else {
-        res.status(404).json({ message: `cliente ${course.id} não encontrado!` })
+        res.status(404).json({ message: `Cliente ${id} não encontrado!` })
       }
     }
   })
