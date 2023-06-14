@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14-Jun-2023 às 22:50
+-- Tempo de geração: 15-Jun-2023 às 00:53
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.0.13
 
@@ -41,6 +41,33 @@ CREATE TABLE `clients` (
   `houseNumber` varchar(5) NOT NULL,
   `referencePoint` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `employees`
+--
+
+CREATE TABLE `employees` (
+  `id` int(11) NOT NULL,
+  `lname` varchar(100) NOT NULL,
+  `fname` varchar(100) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `office` varchar(20) NOT NULL,
+  `wage` varchar(10) NOT NULL,
+  `birth` date NOT NULL,
+  `street` varchar(50) NOT NULL,
+  `number` int(5) NOT NULL,
+  `address` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `employees`
+--
+
+INSERT INTO `employees` (`id`, `lname`, `fname`, `cpf`, `email`, `office`, `wage`, `birth`, `street`, `number`, `address`) VALUES
+(1, 'moreira', 'vitor', '490490490', 'teste@gmail.com', 'administragodr de ge', '$1200', '2003-07-18', 'derivlado', 118, 'palmeiras');
 
 -- --------------------------------------------------------
 
@@ -128,6 +155,12 @@ ALTER TABLE `clients`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `employees`
+--
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `products`
 --
 ALTER TABLE `products`
@@ -154,6 +187,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `clients`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `employees`
+--
+ALTER TABLE `employees`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `products`
