@@ -106,9 +106,9 @@ export const listAllClient = (callback) => {
   })
 }
 
-export const showId = (idclient, callback) => {
+export const showId = (id, callback) => {
   const sql = "SELECT * FROM clients WHERE id = ?;"
-  const values = [idclient]
+  const values = [id]
   con.query(sql, values, (err, result) => {
     if (err) {
       callback(err, null) //a funcao callback é obg a passar 2 parametros
@@ -157,7 +157,7 @@ export const deleteClient = (id, callback) => {
 export const updateClient = (client, callback) => {
   const { id, fname, lname, cpf, dateOfBirth, phone, email, address, street, cep, houseNumber, referencePoint} = client
   const sql = 'UPDATE clients SET fname = ? , lname = ? , cpf = ? , dateOfBirth = ? , phone = ? , email = ? , address = ? , street = ? , cep = ? , houseNumber = ? , referencePoint = ?  WHERE id = ?;'
-  const values = [fname, lname, cpf, dateOfBirth, phone, email, address, street, cep, houseNumber, referencePoint]
+  const values = [fname, lname, cpf, dateOfBirth, phone, email, address, street, cep, houseNumber, referencePoint, id]
 
   con.query(sql, values, (err, result) => {
     if (err) {
