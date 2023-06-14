@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 12-Jun-2023 às 19:41
+-- Tempo de geração: 14-Jun-2023 às 22:50
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.0.13
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `clients`
+--
+
+CREATE TABLE `clients` (
+  `id` int(11) NOT NULL,
+  `fname` varchar(15) NOT NULL,
+  `lname` varchar(70) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `dateOfBirth` date NOT NULL,
+  `phone` varchar(14) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `cep` varchar(9) NOT NULL,
+  `houseNumber` varchar(5) NOT NULL,
+  `referencePoint` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `products`
 --
 
@@ -39,7 +60,18 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`, `stock`) VALUES
-(4, 'admin', 'R$ 5,00', 1500);
+(1, 'Garrafas', 'R$ 15,00', 1500),
+(2, 'Mochila', 'R$ 150,00', 300),
+(3, 'Caderno', 'R$ 10,00', 150),
+(8, 'Borracha', 'R$ 1,50', 110),
+(9, 'Caneta Bic', 'R$ 2,99', 750),
+(10, 'Estojo', 'R$ 30,00', 240),
+(11, 'Tesoura', 'R$ 18,00', 60),
+(12, 'Marca Texto', 'R$ 2,00', 500),
+(13, 'Cx Lápis de Cor', 'R$ 48,00', 270),
+(14, 'Lápis de Escrever', 'R$ 1,00', 499),
+(15, 'Régua', 'R$ 20,00', 40),
+(16, 'Lapisera', 'R$ 5,00', 200);
 
 -- --------------------------------------------------------
 
@@ -58,41 +90,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `id_user`, `session`) VALUES
-(1, 21, 5),
-(2, 21, 15),
-(3, 21, 57728),
-(4, 21, 6),
-(5, 21, 0),
-(6, 21, 0),
-(7, 22, 0),
-(8, 22, 0),
-(9, 22, 2),
-(10, 22, 7940),
-(11, 22, 0),
-(12, 22, 0),
-(13, 22, 0),
-(14, 22, 8),
-(15, 22, 184),
-(16, 22, 9),
-(17, 21, 838),
-(18, 22, 0),
-(19, 22, 9),
-(20, 22, 9),
-(21, 22, 0),
-(22, 22, 88),
-(23, 22, 0),
-(24, 22, 792191),
-(25, 22, 0),
-(26, 22, 444),
-(27, 22, 3),
-(28, 22, 11),
-(29, 22, 2),
-(30, 107, 0),
-(31, 48, 95),
-(32, 48, 4),
-(33, 48, 0),
-(34, 48, 50),
-(35, 108, 0);
+(35, 48, 0);
 
 -- --------------------------------------------------------
 
@@ -116,12 +114,18 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fname`, `lname`, `office`, `cpf`, `password`, `email`, `token`) VALUES
-(21, 'Manoela', 'Larissa', 'Atriz', '49047138855', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'teste@gmail.com', ''),
-(108, 'vitor', 'Moreira', 'dev junnior', '12345678910', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'teste@gmail.com', '');
+(48, 'vitor', 'Moreira', 'dev junnior', '12345678910', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'teste@gmail.com', ''),
+(107, 'vitor', 'josue', 'dev senior', '12345678911', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'teste@gmail.com', '');
 
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices para tabela `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices para tabela `products`
@@ -146,10 +150,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT de tabela `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `sessions`
@@ -161,7 +171,7 @@ ALTER TABLE `sessions`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
