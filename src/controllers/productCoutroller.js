@@ -87,7 +87,7 @@ export const updateProduct = (req, res) => {
       if (result.affectedRows) {
         res.json({ message: "Produto Atualizado com sucesso!" })
       } else {
-        res.status(404).json({ message: `Produto ${course.id} não encontrado!` })
+        res.status(404).json({ message: `Produto ${id} não encontrado!` })
       }
     }
   })

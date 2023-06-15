@@ -1,20 +1,20 @@
 import express from 'express'
 import {
-  listAllclients,
-  listId,
-  createclients,
-  deleteclient,
+  listAllClients,
+  showId,
+  createClients,
+  deleteClients,
   deleteId,
-  updateclient
+  updateClients
 } from '../controllers/clientsController.js'
 
 const router = express.Router()
 
-router.get('/', listAllclients)
-router.get('/:id', listId)
-router.post('/', createclients)
-router.delete('/', deleteclient)
+router.get('/', listAllClients)
+router.get('/:id', showId)
+router.post('/', createClients)
+router.delete('/', deleteClients)
 router.delete('/:id', deleteId)
-router.put('/', updateclient)
+router.put('/', updateClients)
 
 export default router
