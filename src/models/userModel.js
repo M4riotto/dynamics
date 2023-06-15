@@ -139,9 +139,9 @@ export const updateUser = (user, callback) => {
 // Método assíncrono para buscar um usuário pelo email
 export const findUserByEmail = (user) => {
   return new Promise((resolve, reject) => {
-    const { cpf, email } = user
-    const sql = 'SELECT fname FROM users WHERE cpf = ? AND email = ?;'
-    const values = [cpf, email]
+    const { cpf } = user
+    const sql = 'SELECT fname FROM users WHERE cpf = ?;'
+    const values = [cpf]
 
     con.query(sql, values, (err, result) => {
       if (err) {

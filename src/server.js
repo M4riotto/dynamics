@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import productRoutes from './routes/productRoutes.js'
+import employeesRoutes from './routes/employeesRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 import errorHandler from './middlewares/errorHandler.js'
@@ -20,6 +21,7 @@ app.use(express.json())
 
 
 app.use('/product', productRoutes)
+app.use('/employees', employeesRoutes)
 app.use('/user/', userRoutes)
 app.use('/auth/', authRoutes)
 
