@@ -47,6 +47,17 @@ export const listAllProduct = (callback) => {
     }
   })
 }
+export const querysearch = (callback) => {
+  const sql = "SELECT name FROM products;"
+  con.query(sql, (err, result) => {
+    if (err) {
+      callback(err, null)
+      console.log(`DB Error: ${err.sqlMessage}`)
+    } else {
+      callback(null, result)
+    }
+  })
+}
 
 export const showId = (id, callback) => {
   const sql = "SELECT * FROM products WHERE id = ?;"
@@ -109,4 +120,4 @@ export const updateProduct = (products, callback) => {
   })
 }
 
-export default { listAllProduct, showId, createProduct, deleteProduct, updateProduct, validateProductsToCreate , validateProductsToUpdate }
+export default { listAllProduct, showId, createProduct, deleteProduct, updateProduct, validateProductsToCreate , validateProductsToUpdate, querysearch }

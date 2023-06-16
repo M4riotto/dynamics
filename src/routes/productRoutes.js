@@ -5,12 +5,14 @@ import {
   createProducts,
   deleteProduct,
   deleteId,
-  updateProducts
+  updateProducts,
+  QuerySearch
 } from '../controllers/productCoutroller.js'
 
 const router = express.Router()
 
 router.get('/', listAllProducts) // SELECT
+router.get('/name', QuerySearch) // SELECT Name
 router.get('/:id', showId)
 router.post('/', createProducts) // INSERT
 router.delete('/', deleteProduct) // DELETE
