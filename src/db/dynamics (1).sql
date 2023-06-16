@@ -29,16 +29,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `clients` (
   `id` int(11) NOT NULL,
-  `fname` varchar(15) NOT NULL,
-  `lname` varchar(70) NOT NULL,
-  `cpf` varchar(14) NOT NULL,
+  `fname` varchar(200) NOT NULL,
+  `lname` varchar(200) NOT NULL,
+  `cpf` int(11) NOT NULL,
   `dateOfBirth` date NOT NULL,
-  `phone` varchar(14) NOT NULL,
+  `phone` bigint(12) NOT NULL,
   `email` varchar(50) NOT NULL,
   `address` varchar(100) NOT NULL,
   `street` varchar(100) NOT NULL,
-  `cep` varchar(9) NOT NULL,
-  `houseNumber` varchar(5) NOT NULL,
+  `cep` int(8) DEFAULT NULL,
+  `houseNumber` bigint(20) NOT NULL,
   `referencePoint` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -218,17 +218,3 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
-CREATE TABLE `clients` (
-  `id` int(11) NOT NULL,
-  `fname` varchar(200) NOT NULL,
-  `lname` varchar(200) NOT NULL,
-  `cpf` int(11) NOT NULL,
-  `dateOfBirth` date NOT NULL,
-  `phone` bigint(12) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `address` varchar(100) NOT NULL,
-  `street` varchar(100) NOT NULL,
-  `cep` int(8) DEFAULT NULL,
-  `houseNumber` bigint(20) NOT NULL,
-  `referencePoint` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
