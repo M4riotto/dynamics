@@ -8,9 +8,6 @@ import clientRoutes from './routes/clientRoutes.js'
 import errorHandler from './middlewares/errorHandler.js'
 import logger from './middlewares/logger.js'
 import { SERVER } from './config.js'
-import logger from './middlewares/logger.js'
-import authRoutes from './middlewares/authenticated.js'
-import errorHandler from './middlewares/errorHandler.js'
 
 
 const app = express()
