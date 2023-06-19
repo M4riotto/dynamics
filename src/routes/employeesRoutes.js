@@ -14,9 +14,8 @@ const router = express.Router()
 router.get('/', listAllEmployees)
 router.get('/:id', showId)
 router.post('/', createEmployees)
-router.delete('/', authenticated, deleteEmployees) // DELETE ID FROM BODY JSON
-router.delete('/:id', authenticated, deleteId) // DELETE ID FROM PARAMS
-router.put('/', authenticated,   updateEmployees
-) // UPDATE
+router.delete('/', deleteEmployees) // DELETE ID FROM BODY JSON
+router.delete('/:id', deleteId) // DELETE ID FROM PARAMS
+router.put('/', updateEmployees) // UPDATE
 
 export default router

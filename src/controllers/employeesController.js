@@ -47,16 +47,15 @@ export const showId = (req, res) => {
 export const createEmployees = async (req, res) => {
   const employees = req.body
   console.log(employees)
+  // const validUser = employeesModel.validateUserToCreate(user)
 
-  const validUser = employeesModel.validateUserToCreate(user)
-
-  if (validUser?.error) {
-    res.status(400).json({
-      message: 'Dados inválidos',
-      fields: zodErrorFormat(validUser.error)
-    })
-    return
-  }
+  // if (validUser?.error) {
+  //   res.status(400).json({
+  //     message: 'Dados inválidos',
+  //     fields: zodErrorFormat(validUser.error)
+  //   })
+  //   return
+  // }
 
 //   try {
 //     const findUser = await employeesModel.findUserByEmail(user)
@@ -74,18 +73,18 @@ export const createEmployees = async (req, res) => {
 
 //   console.log('passou de mais')
 
-  const userEmployees = validEmployees.data
+  // const userEmployees = validEmployees.data
 
-  employeesModel.createEmployees(employeesValidated, (error, result) => {
+  employeesModel.createEmployees(employees, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
-      delete user.password
+      // delete user.password
       res.json({
         message: "Usuário Cadastrado!",
         user: {
           id: result.insertId,
-          ...user
+          ...employees
         }
       })
     }
@@ -95,7 +94,7 @@ export const createEmployees = async (req, res) => {
 
 export const deleteEmployees= (req, res) => {
   const { id } = req.body
-  const idEmployeesLogged = req.idEmployeesLogged
+  const idEmployeesLogged = req.idEmployeesLogged 
   const rolesUserLogged = req.rolesUserLogged
   if (!id || isNaN(id)) {
     res.status(400).json({
@@ -165,29 +164,8 @@ export const deleteId = (req, res) => {
 }
 
 export const updateEmployees = (req, res) => {
-  const user = req.body
-  const validEmployees = employeesModel.validateEmployeesToUpdate(employees)
-  const idUserLogged = req.idUserLogged
-  const rolesUserLogged = req.rolesUserLogged
-  if (validUser?.error) {
-    res.status(400).json({
-      message: 'Dados inválidos',
-      fields: zodErrorFormat(validUser.error)
-    })
-    return
-  }
-
-  const userValidated = validUser.data
-
-  // verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
-  if (!rolesUserLogged.includes('admin')) {
-    if (idUserLogged !== user.id) {
-      res.status(401).json({ message: `Usuário não autorizado!` })
-      return
-    }
-  }
-
-  employeesModel.updateEmployees(employeesValidated, (error, result) => {
+  const employees = req.body
+  employeesModel.updateEmployees(employees, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
