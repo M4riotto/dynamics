@@ -3,6 +3,7 @@ import cors from 'cors'
 import productRoutes from './routes/productRoutes.js'
 import employeesRoutes from './routes/employeesRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import salesRoutes from './routes/salesRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 import clientRoutes from './routes/clientRoutes.js'
 import errorHandler from './middlewares/errorHandler.js'
@@ -22,6 +23,7 @@ app.use('/employees', employeesRoutes)
 app.use('/user/', userRoutes)
 app.use('/auth/', authRoutes)
 app.use('/client/', clientRoutes)
+app.use('/sales', salesRoutes)
 
 app.all('*', (req, res) => {
   res.status(404).json({ message: '404 Rota não encontrada...' })
