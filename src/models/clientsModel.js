@@ -153,6 +153,17 @@ export const deleteClient = (id, callback) => {
     }
   })
 }
+export const querysearch = (callback) => {
+  const sql = "SELECT name FROM clients;"
+  con.query(sql, (err, result) => {
+    if (err) {
+      callback(err, null)
+      console.log(`DB Error: ${err.sqlMessage}`)
+    } else {
+      callback(null, result)
+    }
+  })
+}
 
 export const updateClient = (client, callback) => {
   const { id, fname, lname, cpf, dateOfBirth, phone, email, address, street, cep, houseNumber, referencePoint} = client
@@ -169,4 +180,4 @@ export const updateClient = (client, callback) => {
   })
 }
 
-export default { listAllClient, showId, createClient, deleteClient, updateClient, validateClientToCreate, validateClientToUpdate, }
+export default { listAllClient, showId, createClient, deleteClient, updateClient, validateClientToCreate, validateClientToUpdate,querysearch}
