@@ -1,10 +1,11 @@
 export const SERVER = {
-  PORT: 3100
+  PORT: process.env.PORT || 3100
 }
 
+//Database config
 export const DB = {
-  HOST: "localhost",
-  USER: "root",
-  PASS: "",
-  DB_NAME: "dynamics"
+  HOST: process.env.DB_HOST || "localhost",
+  USER: process.env.USER || "root",
+  PASS: process.env.DB_PASSWORD || "",
+  DB_NAME: process.env.DB_DATABASE || "dynamics"
 }

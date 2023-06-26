@@ -27,12 +27,11 @@ export const showId = (id, callback) => {
   })
 }
 
-export const createSales = (sales, callback) => {
-  const { nameClient, nameProduct } = sales
+export const createSale = (clientID, callback) => {
   // const sql = 'INSERT INTO cursos SET ?;'
   // const values = { nome, cargahoraria }
-  const sql = 'INSERT INTO sales (client, product) VALUES (?, ?);'
-  const values = [nameClient, nameProduct]
+  const sql = 'INSERT INTO sales (id_cliente) VALUES ( ? );'
+  const values = [clientID]
 
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -73,4 +72,4 @@ export const updateProduct = (product, callback) => {
   })
 }
 
-export default { showId, createSales}
+export default { showId, createSale}
