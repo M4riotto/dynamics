@@ -25,7 +25,7 @@ app.use('/productSales', productSalesRoutes)
 app.use('/user/', userRoutes)
 app.use('/auth/', authRoutes)
 app.use('/client/', clientRoutes)
-app.use('/sales', salesRoutes)
+app.use('/sales/', salesRoutes)
 
 app.all('*', (req, res) => {
   res.status(404).json({ message: '404 Rota não encontrada...' })

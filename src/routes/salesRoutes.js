@@ -1,13 +1,15 @@
 import express from 'express'
 import {
   createSale,
-  showId
+  listAllSales,
+  listAllProducts
 } from '../controllers/salesCoutroller.js'
 
 const router = express.Router()
 
 // router.get('/', listAllSales) // SELECT
-router.get('/:id', showId)
+router.get('/', listAllSales)
+router.get('/:id', listAllProducts)
 router.post('/', createSale) // INSERT
 // router.delete('/', deleteSales) // DELETE
 // router.delete('/:id', deleteId) 
