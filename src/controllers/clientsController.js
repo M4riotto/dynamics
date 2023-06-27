@@ -72,6 +72,18 @@ export const deleteId = (req, res) => {
   })
 }
 
+export const QuerySearch = (req, res) => {
+  productModel.querysearch((error, result) => {
+    if (error)
+      res.status(500).json({ message: "Erro no Banco de Dados" })
+    if (result.length){
+      res.json(result)
+    } else{
+      res.json({ message: "Nenhum produto cadastrado!" })
+    }
+  })
+}
+
 export const updateClients = (req, res) => {
   const client = req.body
   console.log(client)
