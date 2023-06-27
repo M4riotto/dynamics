@@ -182,23 +182,4 @@ export const updateEmployees = (employees, callback) => {
 //     })
 // }
 
-
-// export const loginUser = (cpf, password, callback) => {
-
-//     const hashPass = sha256(password)
-
-//     console.log(cpf, hashPass)
-
-//     const sql = 'SELECT * FROM users WHERE cpf = ? AND password = ?;'
-//     const value = [cpf, hashPass]
-//     con.query(sql, value, (err, result) => {
-//         if (err) {
-//             callback(err, null)
-//             console.log(`DB Error: ${err.sqlMessage}`)
-//         } else {
-//             callback(null, result)
-//         }
-//     })
-// }
-
 export default { listAllEmployees, showId, createEmployees, deleteEmployees, updateEmployees, validateEmployeesToCreate, validateEmployeesToUpdate } 
