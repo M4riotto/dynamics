@@ -5,7 +5,7 @@ export const listAllSales = (req, res) => {
   salesModel.listAllSales((error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result.length) {
+    if (result) {
       res.json(result)
     } else {
       res.json({ message: "Nenhum produto cadastrado!" })
@@ -47,8 +47,15 @@ export const listAllProducts = (req, res) => {
 export const createSale = (req, res) => {
   const sales = req.body.sales
   const clientID = req.body.clientID
+  const totalValue = req.body.totalValue
+
+  const clientTotal = {
+    clientID: clientID,
+    totalValue: totalValue
+  };
+
   //TODO Verificar se os dados são válidos
-  salesModel.createSale(clientID, (error, result) => {
+  salesModel.createSale(clientTotal, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
