@@ -6,7 +6,7 @@ export const createSalesProduct = (sales, salesID, callback) => {
   let values = []
 
   sales.forEach((sale) => {
-    sql += 'INSERT INTO product_sales (id_sales, id_product, stock) VALUES (?, ?, ?); '
+    sql += 'INSERT INTO product_sales (id_sales, id_product, qtd) VALUES (?, ?, ?); '
   })
 
   sales.forEach((sale) => {
@@ -14,7 +14,7 @@ export const createSalesProduct = (sales, salesID, callback) => {
       ...values,
       salesID,
       sale.id,
-      10
+      sale.qtd
     ]
   })
 

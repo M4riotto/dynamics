@@ -1,7 +1,9 @@
 import con from '../db/dbConnection.js'
 
+
+
 export const listAllSales = (callback) => {
-  const sql = "SELECT * FROM products;"
+  const sql = "SELECT DISTINCT(c.id), s.id, s.date, c.fname, s.valor FROM sales as s INNER JOIN clients as c ON s.id_cliente = c.id;"
   con.query(sql, (err, result) => {
     if (err) {
       callback(err, null)
@@ -12,8 +14,8 @@ export const listAllSales = (callback) => {
   })
 }
 
-export const showId = (id, callback) => {
-  const sql = "SELECT * FROM products WHERE id = ?;"
+export const listAllProducts = (id, callback) => {
+  const sql = "SELECT * FROM product_sales AS s INNER JOIN products AS c ON s.id_product = c.id INNER JOIN sales ON s.id_sales = sales.id WHERE id_sales = ?;"
   const values = [id]
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -27,11 +29,12 @@ export const showId = (id, callback) => {
   })
 }
 
-export const createSale = (clientID, callback) => {
+export const createSale = (clientTotal, callback) => {
+  const {clientID, totalValue} = clientTotal
   // const sql = 'INSERT INTO cursos SET ?;'
   // const values = { nome, cargahoraria }
-  const sql = 'INSERT INTO sales (id_cliente) VALUES ( ? );'
-  const values = [clientID]
+  const sql = 'INSERT INTO sales (id_cliente, valor) VALUES ( ?, ? );'
+  const values = [clientID, `R$ ${totalValue},00` ]
 
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -43,33 +46,4 @@ export const createSale = (clientID, callback) => {
   })
 }
 
-export const deleteProduct = (id, callback) => {
-  const sql = 'DELETE FROM products WHERE id = ?;'
-  const values = [id]
-
-  con.query(sql, values, (err, result) => {
-    if (err) {
-      callback(err, null)
-      console.log(`DB Error: ${err.sqlMessage}`)
-    } else {
-      callback(null, result)
-    }
-  })
-}
-
-export const updateProduct = (product, callback) => {
-  const { id, name, price, stock } = product
-  const sql = 'UPDATE products SET name = ?, price = ?, stock = ?  WHERE id = ?;'
-  const values = [name, price, stock, id]
-
-  con.query(sql, values, (err, result) => {
-    if (err) {
-      callback(err, null)
-      console.log(`DB Error: ${err.sqlMessage}`)
-    } else {
-      callback(null, result)
-    }
-  })
-}
-
-export default { showId, createSale}
+export default { listAllSales, createSale, listAllProducts}
